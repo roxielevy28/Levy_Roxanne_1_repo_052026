@@ -6,20 +6,6 @@ page = requests.get('https://books.toscrape.com/catalogue/set-me-free_988/index.
 soup = BeautifulSoup (page.content, 'html.parser')
 print(soup)
 
-product = soup.find(id="default")
-print (product)
+headers = { "product_page_url, universal_ product_code (upc)"}
 
-items = product.find_all(class_= 'default')
-print(items)
 
-print(items[0].find(class_= 'star-rating Five').get_text())
-
-review_rating = [items[0].find(class_= 'star-rating Five').get_text()]
-
-print(review_rating)
-
-book_stuff = pd.DataFrame(
-    {
-     'review_rating': review_rating
-    })
-print(book_stuff)
