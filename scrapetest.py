@@ -37,17 +37,16 @@ product_description=(items_3[0].find('p').get_text())
 print(product_description)
 
 info_table = soup.find('table', class_='table-striped')
-Table_Data= {}
+Table_Data = {}
 for row in info_table.find_all('tr'):
+    header = row.find('th').text.strip()
+    value = row.find('td').text.strip()
+    Table_Data[header] = value
 
-header = row.find('th').text.strip()
-value = row.find('td').text.strip()
-Table_Data[header] = value
-
-universal_product_code (upc) = Table_Data.get ('UPC')
+UPC = Table_Data.get ('UPC')
 price_including_tax = Table_Data.get ('Price (incl. tax)')
-price_excluding_tax =Table_Data.get ('Price (excl. tax)')
-print(universal_product_code (upc))
+price_excluding_tax = Table_Data.get ('Price (excl. tax)')
+print(UPC)
 print(price_including_tax)
 print(price_excluding_tax)
 
