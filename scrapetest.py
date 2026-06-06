@@ -20,7 +20,7 @@ quantity_available=(items[0].find(class_= 'instock availability').get_text())
 
 Book_rating=items[0].find(class_='star-rating')['class'][1]
 rates={"One": "1", "Two": "2", "Three": "3", "Four": "4", "Five": "5"}
-review_rating= rates[book_rating]
+review_rating= rates[Book_rating]
 # print(review_rating)
 
 items_1[0] = product.find(class_= 'carousel')
@@ -29,7 +29,7 @@ Image_URL=(items_1[0].find('img') ['src'])
 print(Image_URL)
 
 items_2[0] = product.find(class_= 'breadcrumb')
-category=items_2[0].(href='../category/books/young-adult_21/index.html') ['href'] [1]
+category=items_2[0].find(href='../category/books/young-adult_21/index.html') ['href'] [1]
 print(category)
 
 items_3[0] = product.find(class_= 'sub-header')
@@ -43,10 +43,10 @@ header = row.find('th').text.strip()
 value = row.find('td').text.strip()
 Table_Data[header] = value
 
-universal_ product_code (upc) = Table_Data.get ('UPC')
+universal_product_code (upc) = Table_Data.get ('UPC')
 price_including_tax = Table_Data.get ('Price (incl. tax)')
 price_excluding_tax =Table_Data.get ('Price (excl. tax)')
-print(universal_ product_code (upc))
+print(universal_product_code (upc))
 print(price_including_tax)
 print(price_excluding_tax)
 
@@ -66,4 +66,6 @@ Book_Report = pd.DataFrame(
     "review_rating",
     "image_url"
     })
-    print(Book_Report)
+
+print(Book_Report)
+Book_Report.to.to_csv(Book_Report.csv)
