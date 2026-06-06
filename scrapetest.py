@@ -43,10 +43,10 @@ for row in info_table.find_all('tr'):
     value = row.find('td').text.strip()
     Table_Data[header] = value
 
-UPC = Table_Data.get ('UPC')
+universal_product_code = Table_Data.get ('UPC')
 price_including_tax = Table_Data.get ('Price (incl. tax)')
 price_excluding_tax = Table_Data.get ('Price (excl. tax)')
-# print(UPC)
+# print(universal_ product_code)
 # print(price_including_tax)
 # print(price_excluding_tax)
 
@@ -55,16 +55,16 @@ product_page_url = ('https://books.toscrape.com/catalogue/set-me-free_988/index.
 
 Book_Report = pd.DataFrame(
     {
-    'product_page_url': url,
+    'product_page_url': product_page_url,
     'universal_product_code': universal_product_code,
-    'book_title': book_title,
+    'Book_Title': Book_Title,
     'price_including_tax': price_including_tax,
     'price_excluding_tax': price_excluding_tax,
-    'quantity_available': price_excluding_tax,
-    'product_description': description,
+    'quantity_available': quantity_available,
+    'product_description': product_description,
     'category': category,
     'review_rating': rating,
-    'image_url': image_url,
+    'image_url': Image_URL,
     })
 
 print(Book_Report)
