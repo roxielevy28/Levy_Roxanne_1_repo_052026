@@ -24,7 +24,6 @@ review_rating= rates[Book_rating]
 # print(review_rating)
 
 items[0] = product.find(class_= 'carousel')
-
 Image_URL=(items[0].find('img') ['src'])
 # print(Image_URL)
 
