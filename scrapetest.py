@@ -35,7 +35,7 @@ items[0] = product.find(class_= 'sub-header')
 product_description=(items[0].find_next('p').text.strip())
 print(product_description)
 
-info_table = soup.find('table', class_='table-striped')
+info_table = product.find('table', class_='table-striped')
 Table_Data = {}
 for row in info_table.find_all('tr'):
     header = row.find('th').text.strip()
@@ -45,7 +45,7 @@ for row in info_table.find_all('tr'):
 universal_product_code = Table_Data.get ('UPC')
 price_including_tax = Table_Data.get ('Price (incl. tax)')
 price_excluding_tax = Table_Data.get ('Price (excl. tax)')
-# print(universal_ product_code)
+# print(universal_product_code)
 # print(price_including_tax)
 # print(price_excluding_tax)
 
@@ -54,16 +54,16 @@ product_page_url = ('https://books.toscrape.com/catalogue/set-me-free_988/index.
 
 Book_Report = pd.DataFrame(
     {
-    'product_page_url': product_page_url,
-    'universal_product_code': universal_product_code,
-    'Book_Title': Book_Title,
-    'price_including_tax': price_including_tax,
-    'price_excluding_tax': price_excluding_tax,
-    'quantity_available': quantity_available,
-    'product_description': product_description,
-    'category': category,
-    'review_rating': review_rating,
-    'image_url': Image_URL,
+        'product_page_url': product_page_url,
+        'universal_product_code': universal_product_code,
+        'Book_Title': Book_Title,
+        'price_including_tax': price_including_tax,
+        'price_excluding_tax': price_excluding_tax,
+        'quantity_available': quantity_available,
+        'product_description': product_description,
+        'category': category,
+        'review_rating': review_rating,
+        'image_url': Image_URL,
     })
 
 print(Book_Report)
