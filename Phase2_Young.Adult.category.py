@@ -21,8 +21,8 @@ for i in range(1, 3): # this catergory has 3 pages I was trying to get the link 
     response = requests.get(url)
     soup = BeautifulSoup(response.text,'html.parser')
     next_page_link= soup.find(class_='next').get('a')['href']
-    actual_next_page_links= urljoin("https://books.toscrape.com/catalogue/category/books/young-adult_21/index.html", next_page_link)
-    url= actual_next_page_links
+    absolute_link= urljoin("https://books.toscrape.com/catalogue/category/books/young-adult_21/index.html", next_page_link)
+    url= absolute_link
     
 print(url)
 
