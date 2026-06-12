@@ -1,10 +1,10 @@
 from urllib.parse import urljoin
-
-import pandas as pd 
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
 catergory= requests.get('https://books.toscrape.com/catalogue/category/books/young-adult_21/index.html')
+response= get
 soup = BeautifulSoup (catergory.content, 'html.parser')
 
 product = soup.find(id="default")
