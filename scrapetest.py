@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 #
 #   Then your Phase2 file can call this function for EVERY book it finds.
 #   That's how you scale from 1 book → 1000 books without rewriting anything!
+
 BASE_URL = "https://books.toscrape.com/catalogue/" # i added this base url variable to make it easier to reuse in the future when i scrape all the books. i can just call this variable instead of writing the url every time.
 page = requests.get('https://books.toscrape.com/catalogue/set-me-free_988/index.html')
 soup = BeautifulSoup (page.content, 'html.parser')
@@ -28,6 +29,7 @@ items = product.find_all(class_= 'col-sm-6 product_main')
 #   - image_url instead of Image_URL
 #   Not wrong, just inconsistent — pick one style and stick with it.
 #   It'll help a lot when you start building bigger scripts!
+
 # okay i fixed the naming convention to snake_case. i will be consistent with it from now on.
 
 book_title=(items[0].find('h1').get_text())
@@ -41,7 +43,7 @@ review_rating= rates[Book_rating]
 items[0] = product.find(class_= 'carousel')
 Image=(items[0].find('img') ['src'])
 image_url= urljoin(BASE_URL, Image)
-
+# i took out the hardcoded url and replaced it with the BASE_URL variable that i created at the top. this way, when i scrape all the books, i can just call the BASE_URL variable instead of writing the url every time.
 items[0] = product.find(class_= 'breadcrumb')
 category=items[0].find_all('a')[2].text.strip()
 
@@ -96,8 +98,8 @@ book_report = pd.DataFrame(
 
 print(book_report)
 
-# ⚠️ BUG: to_csv needs a filename string. Book_Report is a DataFrame variable,
-#   not a string. Try: Book_Report.to_csv('Book_Report.csv')
+
+book_report.to_csv('Book_Report.csv')
 
 # 🎯 MILESTONE 3 NOTE: When you scale to 1000 books, you DON'T want to create
 #   a new DataFrame for each book. Instead, collect ALL book dictionaries into
@@ -111,4 +113,3 @@ print(book_report)
 #       master_report.to_csv('all_books.csv', index=False)
 #
 #   This is much faster and cleaner than creating 1000 separate CSVs!
-book_report.to_csv('Book_Report.csv')
