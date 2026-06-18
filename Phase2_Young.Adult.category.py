@@ -18,7 +18,8 @@ for book_element in books_on_page:
     print(full_url)
   # this works now. i got all the links on the first page
 
-    # you recommend call your book-scraper howver i dont understand were the "scrape_one book" came from for this- book_data = scrape_one_book(complete_url). im not sure if i deleted one of my old files that was used for this variable. 
+book_data = scrape_one_book(full_url)
+    # you recommend call your book-scraper however i dont understand were the "scrape_one book" came from for this- book_data = scrape_one_book(complete_url). im not sure if i deleted one of my old files that was used for this variable. 
     
 
 next_button = soup.find(class_='next')
