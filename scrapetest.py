@@ -49,11 +49,16 @@ def scrape_one_book(url):
     for row in info_table.find_all('tr'):
         header = row.find('th').text.strip()
         value = row.find('td').text.strip()
-        table_dataable_Data[header] = value
+        # Harold: (Milestone 2 typo fix) The original line had 'table_dataable_Data' — a typo mixing
+        # my variable name 'table_data' with 'Data' from the table header. Python saw this as a BRAND NEW
+        # variable instead of writing into my dictionary. Fix: use the actual variable name 'table_data'
+        table_data[header] = value
 
     universal_product_code = table_data.get ('UPC')
     price_including_tax = table_data.get ('Price (incl. tax)')
-    price_excluding_tax = table_dataata.get ('Price (excl. tax)')
+    # Harold: (Milestone 2 typo fix) 'table_dataata' was another typo — a double 'ata' tacked on.
+    # Same root cause as above: the real dictionary is called 'table_data' (defined on line 48).
+    price_excluding_tax = table_data.get ('Price (excl. tax)')
 
  # ❓ GREAT QUESTION: "Where does this URL come from when I scrape ALL books?"
  #   Right now you hardcoded it because you were testing with one book.
@@ -73,10 +78,17 @@ def scrape_one_book(url):
  #   coming from each book's link on the listing page.
  #   TIP: Python's `urllib.parse.urljoin(base, relative)` can help convert
  #   relative URLs to absolute ones.
-***** product_page_url = ('https://books.toscrape.com/catalogue/set-me-free_988/index.html')***** # Im not sure if there still needs to be here since im coverting to a reusable function
-    
+    # Harold: (Milestone 2 fix + connects to Milestones 3 & 4) The old line had '*****' as pseudo-comment
+    # markers (not valid Python syntax) and hardcoded ONE book's URL. That defeats the purpose of making
+    # this a reusable function! Now that this function takes 'url' as a parameter, I should use THAT url.
+    # When Phase2 (Milestone 3) or All_Catergory.py (Milestone 4) calls scrape_one_book(some_url),
+    # 'some_url' is what gets passed in as 'url' here — and that's the product_page_url for that book.
+    product_page_url = url
+
     return {
+            # Harold: product_page_url now uses the 'url' parameter (Milestone 2 fix)
             'product_page_url': [product_page_url],
+            # Harold: The remaining fields come from my extraction logic above (Milestone 2 original)
             'universal_product_code': [universal_product_code],
             'book_title': [book_title],
             'price_including_tax': [price_including_tax],
