@@ -1,5 +1,5 @@
 # Harold Fix Suggestion: (Milestone 4) Note — the filename has a typo: 'Catergory' should be 'Category'.
-# You may want to rename this file to 'All_Category.py' for consistency.
+# Roxanne: the file name was changed
 
 from urllib.parse import urljoin
 import pandas as pd
