@@ -54,46 +54,16 @@ def scrape_one_book(url):
     for row in info_table.find_all('tr'):
         header = row.find('th').text.strip()
         value = row.find('td').text.strip()
-        # Harold: (Milestone 2 typo fix) The original line had 'table_dataable_Data' — a typo mixing
-        # my variable name 'table_data' with 'Data' from the table header. Python saw this as a BRAND NEW
-        # variable instead of writing into my dictionary. Fix: use the actual variable name 'table_data'
         table_data[header] = value
 
     universal_product_code = table_data.get ('UPC')
     price_including_tax = table_data.get ('Price (incl. tax)')
-    # Harold: (Milestone 2 typo fix) 'table_dataata' was another typo — a double 'ata' tacked on.
-    # Same root cause as above: the real dictionary is called 'table_data' (defined on line 48).
     price_excluding_tax = table_data.get ('Price (excl. tax)')
-
- # ❓ GREAT QUESTION: "Where does this URL come from when I scrape ALL books?"
- #   Right now you hardcoded it because you were testing with one book.
- #   When you move to the week milestone (scraping all 1,000 books), you'll get
- #   this URL from the LISTING PAGES instead. Here's how:
- #
- #   1. You fetch a listing page like:
- #        https://books.toscrape.com/catalogue/category/books_1/index.html
- #   2. You find all <article class="product_pod"> elements on that page
- #   3. Each one has a link: <h3><a href="../../a-light-in-the-attic_1000/index.html">
- #   4. You convert that relative href to an absolute URL, e.g.:
- #        "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html"
- #   5. THAT becomes the product_page_url for that book — and you pass it into
- #      your scraping function to get all the other fields.
- #
- #   So product_page_url won't be hardcoded anymore — it will be DYNAMIC,
- #   coming from each book's link on the listing page.
- #   TIP: Python's `urllib.parse.urljoin(base, relative)` can help convert
- #   relative URLs to absolute ones.
-    # Harold: (Milestone 2 fix + connects to Milestones 3 & 4) The old line had '*****' as pseudo-comment
-    # markers (not valid Python syntax) and hardcoded ONE book's URL. That defeats the purpose of making
-    # this a reusable function! Now that this function takes 'url' as a parameter, I should use THAT url.
-    # When Phase2 (Milestone 3) or All_Catergory.py (Milestone 4) calls scrape_one_book(some_url),
-    # 'some_url' is what gets passed in as 'url' here — and that's the product_page_url for that book.
+   
     product_page_url = url
 
     return {
-            # Harold: product_page_url now uses the 'url' parameter (Milestone 2 fix)
             'product_page_url': product_page_url,
-            # Harold: The remaining fields come from my extraction logic above (Milestone 2 original)
             'universal_product_code': universal_product_code,
             'book_title': book_title,
             'price_including_tax': price_including_tax,
