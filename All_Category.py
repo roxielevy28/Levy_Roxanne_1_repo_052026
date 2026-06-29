@@ -1,3 +1,4 @@
+import os
 from urllib.parse import urljoin
 import pandas as pd
 import requests
@@ -32,33 +33,39 @@ for category in category_links[1:]:
      print(f"  ❌ Failed on {cat_name}: {e}")
      continue
 
-all_book_urls = []
-     page = requests.get(cat_url)
-     soup = BeautifulSoup(page.text, 'html.parser')
-     books_on_page = soup.find_all(class_='col-xs-6 col-sm-4 col-md-3 col-lg-3')
-     all_book_urls = []
+    all_book_urls = []
+        page = requests.get(cat_url)
+        soup = BeautifulSoup(page.text, 'html.parser')
 
-     for book_element in books_on_page:
-         link = book_element.find('h3').find('a')['href']
-         full_url = urljoin(cat_url, link)
-         all_book_urls.append(full_url)
-         
-     while True:
-        next_button = soup.find(class_="next")
-        if not next_button:
-            break
-        next_page = next_button.find("a")["href"]
-        cat_url = urljoin(cat_url, next_page)
-        
-     all_books = []
-     os.makedirs('csv_reports', exist_ok=True)
-     for url in all_book_urls:
-        book_data = scrape_one_book(url)
-        all_books.append(book_data)
-     safe_name = cat_name.lower().replace(" ", "_")
-     df = pd.DataFrame(all_books)
-     df.to_csv(f"csv_reports/{safe_name}.csv", index=False)
-     print(f"Saved {len(all_books)} books to {safe_name}.csv")
+        while True:
+            books_on_page = soup.find_all(class_='col-xs-6 col-sm-4 col-md-3 col-lg-3')
+            for book_element in books_on_page:
+                link = book_element.find('h3').find('a')['href']
+                full_url = urljoin(cat_url, link)
+                all_book_urls.append(full_url)
+
+            next_button = soup.find(class_="next")
+            if not next_button:
+                break
+
+            next_page = next_button.find("a")["href"]
+            cat_url = urljoin(cat_url, next_page)
+            page = requests.get(cat_url)
+            soup = BeautifulSoup(page.text, 'html.parser')
+
+        all_books = []
+        for url in all_book_urls:
+            book_data = scrape_one_book(url)
+            all_books.append(book_data)
+
+        safe_name = cat_name.lower().replace(" ", "_")
+        os.makedirs('csv_reports', exist_ok=True)
+        df = pd.DataFrame(all_books)
+        df.to_csv(f"csv_reports/{safe_name}.csv", index=False)
+        print(f"Saved {len(all_books)} books to {safe_name}.csv")
+    except Exception as e:
+        print(f"  ❌ Error on {cat_name}: {e}")
+        continue
 
 
 
