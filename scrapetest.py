@@ -1,41 +1,9 @@
 from urllib.parse import urljoin
 import pandas as pd
+import re
 import requests
 from bs4 import BeautifulSoup
 
-# =============================================================================
-# 🔴 ISSUE #1 — List-wrapped return values (MOST IMPORTANT FIX)
-# =============================================================================
-# Harold: (2026-06-28, Milestone 2 → affects ALL other files) The return
-# dictionary at the bottom of scrape_one_book() wraps every value in a list:
-#
-#        return {
-#            'book_title': [book_title],         # ← wrapped in [...]
-#            'review_rating': [review_rating],   # ← wrapped in [...]
-#            ...
-#        }
-#
-# When pandas builds a DataFrame from many of these dicts, the CSV shows
-# ['The Hobbit'] with brackets and quotes instead of just The Hobbit.
-#
-# ✅ FIX: Remove ALL the [...] wrapping. Change the return to:
-#
-#        return {
-#            'product_page_url': product_page_url,
-#            'universal_product_code': universal_product_code,
-#            'book_title': book_title,
-#            'price_including_tax': price_including_tax,
-#            'price_excluding_tax': price_excluding_tax,
-#            'quantity_available': quantity_available,
-#            'product_description': product_description,
-#            'category': category,
-#            'review_rating': review_rating,
-#            'image_url': image_url,
-#        }
-#
-# 🎯 WHY FIX THIS FIRST: Every other file (Phase2, All_Category, Image_files)
-#    calls this function. Fixing it here automatically fixes the CSV output
-#    everywhere AND simplifies the download_image() function in Image_files.py.
 
 # =============================================================================
 # 🟡 ISSUE #2 — quantity_available stores extra text
@@ -149,21 +117,15 @@ def scrape_one_book(url):
 
     return {
             # Harold: product_page_url now uses the 'url' parameter (Milestone 2 fix)
-            'product_page_url': [product_page_url],
+            'product_page_url': product_page_url,
             # Harold: The remaining fields come from my extraction logic above (Milestone 2 original)
-            'universal_product_code': [universal_product_code],
-            'book_title': [book_title],
-            'price_including_tax': [price_including_tax],
-            'price_excluding_tax': [price_excluding_tax],
-            'quantity_available': [quantity_available],
-            'product_description': [product_description],
-            'category': [category],
-            'review_rating': [review_rating],
-            'image_url': [image_url],
+            'universal_product_code': universal_product_code,
+            'book_title': book_title,
+            'price_including_tax': price_including_tax,
+            'price_excluding_tax': price_excluding_tax,
+            'quantity_available': quantity_available,
+            'product_description': product_description,
+            'category': category,
+            'review_rating': review_rating,
+            'image_url': image_url,
     }
-
-# ********I belive i added all the changes to make this a reusable function********
-# 🎯 MILESTONE 3 NOTE: When you scale to 1000 books, you DON'T want to create
-#   a new DataFrame for each book. Instead, collect ALL book dictionaries into
-#   one big list, then build ONE DataFrame at the very end:
-#
