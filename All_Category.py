@@ -1,13 +1,7 @@
-# Harold Fix Suggestion: (Milestone 4) Note — the filename has a typo: 'Catergory' should be 'Category'.
-# Roxanne: the file name was changed
-
 from urllib.parse import urljoin
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-# Harold: (Milestone 4 → connects to Milestones 2 & 3) Importing the reusable scraper function
-# This function was built in Milestone 2 and called per-category in Milestone 3.
-# Now I'll use it for EVERY category to scrape ALL 1000 books on the site.
 from scrapetest import scrape_one_book
 
 # =============================================================================
@@ -92,12 +86,17 @@ for category_url in categories:
     })
 print(category_links)
 
-for category in category_links:
+for category in category_links[1:]:
+     try:
      cat_name = category["name"]
      cat_url  = category["url"]
-     print(f"Scraping category: {cat_name}")
+     ... (all the scraping logic) ...
+     df.to_csv(f"csv_reports/{safe_name}.csv", index=False)
+     except Exception as e:
+     print(f"  ❌ Failed on {cat_name}: {e}")
+     continue
 
-     all_book_urls = []
+all_book_urls = []
      page = requests.get(cat_url)
      soup = BeautifulSoup(page.text, 'html.parser')
      books_on_page = soup.find_all(class_='col-xs-6 col-sm-4 col-md-3 col-lg-3')

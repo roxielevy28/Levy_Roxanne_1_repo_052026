@@ -49,21 +49,6 @@ while True:
         book_data = scrape_one_book(complete_url)
         all_books.append(book_data)
 
-# =============================================================================
-# 🟡 ISSUE #3 — OUTPUT FILENAME: 'all_books.csv' is too generic
-# =============================================================================
-# Harold: (2026-06-28, Milestone 3 → connects to Milestone 4) This file always
-# saves to 'all_books.csv'. But All_Category.py saves each category to its own
-# named file like 'young_adult.csv', 'mystery.csv', etc. This is inconsistent.
-#
-# ✅ FIX: Change the filename to match the category:
-#
-#       master_report.to_csv('young_adult.csv', index=False)
-#
-# 🎯 WHY: Consistency. When you look at your folder later, you'll immediately
-#    know which file is which. Also avoids overwriting if you run both scripts.
-
-# Harold: (Milestone 3, Step 3) Export everything to ONE CSV — all books from every page in this category
 master_report = pd.DataFrame(all_books)
 os.makedirs('csv_reports', exist_ok=True)
 master_report.to_csv('csv_reports/young_adult.csv', index=False)
