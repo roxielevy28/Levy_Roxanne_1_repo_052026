@@ -28,8 +28,8 @@ for category in category_links[1:]:
     try:
         cat_name = category["name"]
         cat_url = category["url"]
-    
-    all_book_urls = []
+
+        all_book_urls = []
         current_url = cat_url
 
         while True:
@@ -55,7 +55,6 @@ for category in category_links[1:]:
             all_books.append(book_data)
 
         safe_name = cat_name.lower().replace(" ", "_")
-        os.makedirs('csv_reports', exist_ok=True)
         df = pd.DataFrame(all_books)
         df.to_csv(f"csv_reports/{safe_name}.csv", index=False)
         print(f"Saved {len(all_books)} books to {safe_name}.csv")
