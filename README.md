@@ -34,7 +34,7 @@ For each book, the scraper extracts the following fields:
 The repository contains the application code, setup files, and documentation.
 
 Repo: Levy_Roxanne_Price_Monitoring_System_052026/
-# Content of Repo
+### Content of Repo
 - README.md
 - requirements.txt
 - .gitignore
