@@ -1,5 +1,5 @@
 # Price Monitoring System
-This project is a beta version of a price monitoring system for Books to Scrape.
+This project is a beta version of a price monitoring system for Books to Scrape (http://books.toscrape.com/).
 The application extracts book product information from the Books to Scrape website, saves the extracted data into CSV files, and extract the associated book cover images that can be saved locally.
 
 ## Project Overview
